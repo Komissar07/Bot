@@ -1,22 +1,17 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.types import Message
-from aiogram.filters import Command
-from keyboards import kb_back
+
+from keyboards import kb_start
 
 keyboard_router = Router()
 
 
-@keyboard_router.message(F.text == 'ChatGPT')
-async def kb_chatgpt(message: Message):
+# @keyboard_router.message(F.text == 'Назад 🔙')
+# @keyboard_router.message(F.text == 'Закончить 🛑')
+# @keyboard_router.message(F.text == 'Попрощаться 👋')
+@keyboard_router.message(F.text)
+async def key_stop(message: Message):
     await message.answer(
-        text='Здесь будет функционал ChatGPT',
-        reply_markup=kb_back()
+        text='Выберите пункт меню...',
+        reply_markup=kb_start()
     )
-
-# @keyboard_router.message(Command('random'))
-# @keyboard_router.message(F.text == 'Рандомный факт 🧠')
-# async def kb_chatgpt(message: Message):
-#     await message.answer(
-#         text='Сейчас выдам рандомный факт',
-#         reply_markup=kb_back()
-#     )

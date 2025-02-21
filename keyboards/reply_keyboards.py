@@ -10,7 +10,7 @@ def kb_start():
     keyboard.adjust(3, 1)
     return keyboard.as_markup(
         resize_keyboard=True,
-        input_field_placeholder='Выберите пункт меню...'
+        # input_field_placeholder='Выберите пункт меню...'
     )
 
 
@@ -19,8 +19,15 @@ def kb_back():
     keyboard.button(text='Назад 🔙')
     return keyboard.as_markup(resize_keyboard=True)
 
+
 def kb_random_facts():
     keyboard = ReplyKeyboardBuilder()
     keyboard.button(text='Хочу ещё факт 🧠')
     keyboard.button(text='Закончить 🛑')
+    return keyboard.as_markup(resize_keyboard=True)
+
+
+def kb_goodbye():
+    keyboard = ReplyKeyboardBuilder()
+    keyboard.button(text='Попрощаться 👋')
     return keyboard.as_markup(resize_keyboard=True)

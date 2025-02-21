@@ -1,5 +1,10 @@
 from aiogram.fsm.state import State, StatesGroup
 
 
-class FSMStates(StatesGroup):
+class ChatGPTStates(StatesGroup):
+    wait_for_request = State()
+
+
+class CelebrityDialog(StatesGroup):
+    wait_for_answer = State()
     wait_for_request = State()
