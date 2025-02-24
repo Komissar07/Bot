@@ -2,8 +2,11 @@ import asyncio
 import os
 
 from aiogram import Bot, Dispatcher
+from dotenv import load_dotenv
 
 from handlers import all_handlers_router
+
+load_dotenv()
 
 
 def on_start():

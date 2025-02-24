@@ -1,7 +1,10 @@
 import os
 
 import aiofiles
+from dotenv import load_dotenv
 from openai import AsyncOpenAI
+
+load_dotenv()
 
 
 class ChatGPT:
