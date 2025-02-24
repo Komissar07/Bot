@@ -31,7 +31,8 @@ class ChatGPT:
         return prompt
 
     async def text_request(self, messages: list[dict[str, str]], prompt: str):
-        message_list = [{'role': 'system', 'content': await self._read_prompt(prompt)}] + messages
+        message_list = [{'role': 'system',
+                         'content': await self._read_prompt(prompt)}] + messages
         completion = await self._client.chat.completions.create(
             messages=message_list,
             model='gpt-4o-mini'

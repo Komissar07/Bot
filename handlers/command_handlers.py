@@ -7,8 +7,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import FSInputFile, Message
 
 from classes import ai_client
-from fsm.states import ChatGPTStates, CelebrityDialog
-from keyboards import ikb_celebrity, kb_back, kb_start, kb_random_facts
+from fsm.states import CelebrityDialog, ChatGPTStates, QuizGame
+from keyboards import *
+from keyboards.callback_data import QuizData
 
 command_router = Router()
 
@@ -31,7 +32,10 @@ async def ai_random_fact(message: Message):
         chat_id=message.from_user.id,
         action=ChatAction.TYPING
     )
-    request_message = [{'role': 'user', 'content': 'Напиши рандомный факт'}]
+    request_message = [
+        {'role': 'user',
+         'content': 'Напиши рандомный факт'}
+    ]
     caption = await ai_client.text_request(request_message, 'random.txt')
     photo_file = FSInputFile(path=os.path.join('images', 'random.jpg'))
     await message.answer_photo(
@@ -64,6 +68,16 @@ async def talk_command(message: Message, state: FSMContext):
     )
     await state.set_state(CelebrityDialog.wait_for_request)
 
-# @command_router.message(Command('help'))
-# async def com_help(message: Message):
-#     await message.answer(text=f'Привет, {message.from_user.full_name}!')
+
+@command_router.callback_query(QuizData.filter(F.button == 'select_type'))
+@command_router.message(F.text == 'QUIZ ❓')
+@command_router.message(Command('quiz'))
+async def quiz_command(message: Message, state: FSMContext):
+    photo_file = FSInputFile(path=os.path.join('images', 'quiz.jpg'))
+    await message.bot.send_photo(
+        chat_id=message.from_user.id,
+        photo=photo_file,
+        caption='Выберите тему:',
+        reply_markup=ikb_select_theme_quiz()
+    )
+    await state.set_state(QuizGame.wait_for_request)

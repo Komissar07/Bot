@@ -1,13 +1,11 @@
 import os
 
 from aiogram import F, Router
-from aiogram.enums import ChatAction
-from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, FSInputFile, Message
+from aiogram.types import CallbackQuery, FSInputFile
 
 from fsm.states import CelebrityDialog
-from keyboards import kb_back, kb_random_facts, kb_start, ikb_celebrity
+from keyboards import kb_back
 from keyboards.callback_data import CelebrityData
 
 callback_router = Router()

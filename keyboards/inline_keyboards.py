@@ -3,7 +3,7 @@ from collections import namedtuple
 
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from .callback_data import CelebrityData
+from .callback_data import CelebrityData, QuizData
 
 
 def ikb_celebrity():
@@ -24,5 +24,60 @@ def ikb_celebrity():
                 file_name=celebrity.file_name
             )
         )
-    keyboard.adjust(*[1] * len(file_list))
+    keyboard.button(
+        text='🔙 Назад 🔙',
+        callback_data=CelebrityData(
+            button='🔙 Назад 🔙',
+            name='None',
+            file_name='None'
+        )
+    )
+    keyboard.adjust(*[1] * (len(file_list)+1))
     return keyboard.as_markup()
+
+
+def ikb_select_theme_quiz():
+    keyboard = InlineKeyboardBuilder()
+    buttons = [
+        ('💻 Программирование 💻', 'quiz_prog'),
+        ('🧮 Математика 🧮', 'quiz_math'),
+        ('🧬 Биология 🧬', 'quiz_biology'),
+        ('🔙 Назад 🔙', 'quiz_back'),
+    ]
+    for button in buttons:
+        keyboard.button(
+            text=button[0],
+            callback_data=QuizData(
+                button='select_quiz',
+                theme=button[1],
+            )
+        )
+    keyboard.adjust(*[1] * len(buttons))
+    return keyboard.as_markup()
+
+
+def ikb_next_quiz():
+    keyboard = InlineKeyboardBuilder()
+    keyboard.button(
+        text='Хочу ещё вопрос ❓',
+        callback_data=QuizData(
+            button='select_quiz',
+            theme='quiz_more'
+        )
+    )
+    keyboard.button(
+        text='Сменить тему 🔄',
+        callback_data=QuizData(
+            button='select_type',
+            theme='None'
+        )
+    )
+    keyboard.button(
+        text='Закончить 🛑',
+        callback_data=QuizData(
+            button='None',
+            theme='quiz_back'
+        )
+    )
+    keyboard.adjust(1, 1, 1)
+    return keyboard.as_markup(resize_keyboard=True)

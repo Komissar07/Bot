@@ -6,6 +6,6 @@ from .command_handlers import command_router
 from .keyboards_handlers import keyboard_router
 
 all_handlers_router = Router()
-all_handlers_router.include_routers(ai_router, command_router, callback_router, keyboard_router)
+all_handlers_router.include_routers(command_router, ai_router, keyboard_router, callback_router)
 
 __all__ = ['all_handlers_router']
