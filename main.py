@@ -23,6 +23,7 @@ async def start_bot():
     dp.startup.register(on_start)
     dp.shutdown.register(on_shutdown)
     dp.include_router(all_handlers_router)
+    await bot.delete_webhook(drop_pending_updates=True)  # Пропуск старых апдейтов
     await dp.start_polling(bot)
 
 
